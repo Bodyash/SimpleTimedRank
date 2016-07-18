@@ -1,35 +1,14 @@
-/*
- * Decompiled with CFR 0_115.
- * 
- * Could not load the following classes:
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Server
- *  org.bukkit.command.Command
- *  org.bukkit.command.CommandSender
- *  org.bukkit.command.ConsoleCommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Listener
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.plugin.PluginDescriptionFile
- *  org.bukkit.plugin.PluginManager
- *  org.bukkit.plugin.java.JavaPlugin
- *  org.bukkit.scheduler.BukkitScheduler
- */
+
 package me.bodyash.SimpleTimedRank.Main;
 
 import me.bodyash.SimpleTimedRank.Main.ConfigUsers;
 import me.bodyash.SimpleTimedRank.Main.ConfigUtility;
 import me.bodyash.SimpleTimedRank.Main.TimeChecker;
 import me.bodyash.SimpleTimedRank.versionchecker.UpdateChecker;
-import java.io.PrintStream;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.StringTokenizer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Server;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -37,9 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitScheduler;
 
 public class Main extends JavaPlugin {
 	PluginDescriptionFile descFile;
@@ -62,7 +39,7 @@ public class Main extends JavaPlugin {
 		this.timeChecker = new TimeChecker(this, this.confUsers);
 		this.getServer().getPluginManager().registerEvents((Listener) this.timeChecker, (Plugin) this);
 		this.noPermissions = this.getNoPermMessage();
-		if (this.isCheckVersion()) {
+		/*if (this.isCheckVersion()) {
 			this.updateChecker = new UpdateChecker(this,
 					"http://dev.bukkit.org/bukkit-plugins/simplepromote/files.rss");
 			this.updateChecker.updateNeeded();
@@ -73,7 +50,7 @@ public class Main extends JavaPlugin {
 			this.console.sendMessage(String.valueOf(this.consoleLogo)
 					+ "If you want to be informed about a new version of " + this.descFile.getName());
 			this.console.sendMessage(String.valueOf(this.consoleLogo) + "Enable it in the config. :)");
-		}
+		}*/
 		this.console.sendMessage(String.valueOf(this.logo) + (Object) ChatColor.GREEN + "Successfully enabled");
 		System.out.println("[" + this.descFile.getName() + "] Version " + this.descFile.getVersion() + " by "
 				+ this.descFile.getAuthors() + ".");
@@ -112,8 +89,8 @@ public class Main extends JavaPlugin {
 	}
 
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		if (label.equalsIgnoreCase("sp")) {
-			this.sp(sender, command, label, args);
+		if (label.equalsIgnoreCase("str")) {
+			this.str(sender, command, label, args);
 			return true;
 		}
 		if (label.equalsIgnoreCase("tempRank") || label.equalsIgnoreCase("upRank")) {
@@ -136,27 +113,27 @@ public class Main extends JavaPlugin {
 		int i = 1;
 		sender.sendMessage(
 				String.valueOf(this.logo) + (Object) ChatColor.DARK_GREEN + "--------- Command List ---------");
-		if (sender.hasPermission("simpletimepromotion.help")) {
+		if (sender.hasPermission("simpletimedrank.help")) {
 			sender.sendMessage(String.valueOf(this.left) + i + this.right + (Object) this.changeColor(i)
-					+ " /sp help: Prints you the commands of this plugin");
+					+ " /str help: Prints you the commands of this plugin");
 			++i;
 		}
-		if (sender.hasPermission("simpletimepromotion.reload")) {
+		if (sender.hasPermission("simpletimedrank.reload")) {
 			sender.sendMessage(String.valueOf(this.left) + i + this.right + (Object) this.changeColor(i)
-					+ " /sp reload: Reloads the whole plugin.");
+					+ " /str reload: Reloads the whole plugin.");
 			++i;
 		}
-		if (sender.hasPermission("simpletimepromotion.tempRank")) {
+		if (sender.hasPermission("simpletimedrank.tempRank")) {
 			sender.sendMessage(String.valueOf(this.left) + i + this.right + (Object) this.changeColor(i)
-					+ " /tempRank [Player] [NewRank] [DateUntil] (time) [OldRank]: Promotes a player to [NewRank] until [DateUntil] (time).");
+					+ " /tempRank [Player] [NewRank] [DaysOrMonths] (timeOfDay) [OldRank]: Promotes a player to [NewRank] until [DaysOrMonths] (timeOfDay).");
 			++i;
 		}
-		if (sender.hasPermission("simpletimepromotion.downRank")) {
+		if (sender.hasPermission("simpletimedrank.downRank")) {
 			sender.sendMessage(String.valueOf(this.left) + i + this.right + (Object) this.changeColor(i)
 					+ " /downRank [Player]: Demotes a Player to his old rank.");
 			++i;
 		}
-		if (sender.hasPermission("simpletimepromotion.timeLeft")) {
+		if (sender.hasPermission("simpletimedrank.timeLeft")) {
 			sender.sendMessage(String.valueOf(this.left) + i + this.right + (Object) this.changeColor(i)
 					+ " /daysLeft: Shows the remaining time until your rank will expire.");
 			++i;
@@ -175,11 +152,11 @@ public class Main extends JavaPlugin {
 		return c2;
 	}
 
-	private boolean sp(CommandSender sender, Command command, String label, String[] args) {
+	private boolean str(CommandSender sender, Command command, String label, String[] args) {
 		if (args.length == 0) {
-			if (sender.hasPermission("simpletimepromotion.help")) {
+			if (sender.hasPermission("simpletimedrank.help")) {
 				sender.sendMessage(String.valueOf(this.logo) + (Object) ChatColor.GOLD
-						+ "If you need help with the commands type '/sp help'.");
+						+ "If you need help with the commands type '/str help'.");
 				return false;
 			}
 			sender.sendMessage(this.noPermissions);
@@ -187,7 +164,7 @@ public class Main extends JavaPlugin {
 		}
 		if (args.length == 1) {
 			if (args[0].equalsIgnoreCase("help")) {
-				if (sender.hasPermission("simpletimepromotion.help")) {
+				if (sender.hasPermission("simpletimedrank.help")) {
 					this.listAllCommands(sender);
 					return true;
 				}
@@ -195,7 +172,7 @@ public class Main extends JavaPlugin {
 				return false;
 			}
 			if (args[0].equalsIgnoreCase("reload")) {
-				if (sender.hasPermission("simpletimepromotion.reload")) {
+				if (sender.hasPermission("simpletimedrank.reload")) {
 					this.onReload(sender);
 					sender.sendMessage(String.valueOf(this.logo) + (Object) ChatColor.DARK_GREEN + "Plugin Reloaded !");
 					return true;
@@ -204,9 +181,9 @@ public class Main extends JavaPlugin {
 				return false;
 			}
 		}
-		if (sender.hasPermission("simpletimepromotion.help")) {
+		if (sender.hasPermission("simpletimedrank.help")) {
 			sender.sendMessage(String.valueOf(this.logo) + (Object) ChatColor.GOLD
-					+ "If you need help with the commands type '/sp help'.");
+					+ "If you need help with the commands type '/str help'.");
 			return false;
 		}
 		sender.sendMessage(this.noPermissions);
@@ -221,17 +198,17 @@ public class Main extends JavaPlugin {
 
 	private boolean tempRank(CommandSender sender, Command command, String label, String[] args) {
 		if (args.length < 4 || args.length > 5) {
-			if (sender.hasPermission("simpletimepromotion.help")) {
+			if (sender.hasPermission("simpletimedrank.help")) {
 				sender.sendMessage(String.valueOf(this.logo) + (Object) ChatColor.GOLD
-						+ "If you need help with the commands type '/sp help'.");
+						+ "If you need help with the commands type '/str help'.");
 				sender.sendMessage(String.valueOf(this.logo) + (Object) ChatColor.GOLD
-						+ "Correct usage: /tempRank [Player] [NewRank] [DateUntil] (time) [OldRank]");
+						+ "Correct usage: /tempRank [Player] [NewRank] [DaysOrMonths] (timeOfDay) [OldRank]");
 				return false;
 			}
 			sender.sendMessage(this.noPermissions);
 			return false;
 		}
-		if (sender.hasPermission("simpletimepromotion.tempRank")) {
+		if (sender.hasPermission("simpletimedrank.tempRank")) {
 			GregorianCalendar timeNow = new GregorianCalendar();
 			if (args.length == 4) {
 				if (this.checkIfCorrectDate(args[2])) {
@@ -307,11 +284,11 @@ public class Main extends JavaPlugin {
 	 * Enabled force condition propagation Lifted jumps to return sites
 	 */
 	private boolean downRank(CommandSender sender, Command command, String label, String[] args) {
-		if (sender.hasPermission("simpletimepromotion.downRank")) {
+		if (sender.hasPermission("simpletimedrank.downRank")) {
 			if (args.length < 1 || args.length > 1) {
-				if (sender.hasPermission("simpletimepromotion.help")) {
+				if (sender.hasPermission("simpletimedrank.help")) {
 					sender.sendMessage(String.valueOf(this.logo) + (Object) ChatColor.GOLD
-							+ "If you need help with the commands type '/sp help'.");
+							+ "If you need help with the commands type '/str help'.");
 					return false;
 				}
 				sender.sendMessage(this.noPermissions);
@@ -361,10 +338,10 @@ public class Main extends JavaPlugin {
 											try {
 												if (args.length <= 1)
 													break block10;
-												if (!sender.hasPermission("simpletimepromotion.help"))
+												if (!sender.hasPermission("simpletimedrank.help"))
 													break block11;
 												sender.sendMessage(String.valueOf(this.logo) + (Object) ChatColor.GOLD
-														+ "If you need help with the commands type '/sp help'.");
+														+ "If you need help with the commands type '/str help'.");
 												return false;
 											} catch (Exception e) {
 												sender.sendMessage(
@@ -377,7 +354,7 @@ public class Main extends JavaPlugin {
 									}
 									if (args.length != 0)
 										break block12;
-									if (!sender.hasPermission("simpletimepromotion.timeLeft"))
+									if (!sender.hasPermission("simpletimedrank.timeLeft"))
 										break block13;
 									Long days = this.timeChecker.getPlayerDaysLeft(sender.getName());
 									if (days == null)
@@ -401,7 +378,7 @@ public class Main extends JavaPlugin {
 					}
 					if (args.length != 1)
 						break block16;
-					if (!sender.hasPermission("simpletimepromotion.timeLeft.others"))
+					if (!sender.hasPermission("simpletimedrank.timeLeft.others"))
 						break block17;
 					Long days = this.timeChecker.getPlayerDaysLeft(args[0]);
 					if (days == null)

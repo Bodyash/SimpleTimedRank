@@ -1,20 +1,9 @@
-/*
- * Decompiled with CFR 0_115.
- * 
- * Could not load the following classes:
- *  org.bukkit.configuration.ConfigurationSection
- *  org.bukkit.configuration.file.YamlConfiguration
- *  org.bukkit.configuration.file.YamlConfigurationOptions
- */
 package me.bodyash.SimpleTimedRank.Main;
 
 import me.bodyash.SimpleTimedRank.Main.Main;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.configuration.file.YamlConfigurationOptions;
 
 public class ConfigUsers {
     private Main main;

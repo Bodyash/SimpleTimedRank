@@ -1,20 +1,8 @@
-/*
- * Decompiled with CFR 0_115.
- * 
- * Could not load the following classes:
- *  org.bukkit.Bukkit
- *  org.bukkit.command.CommandSender
- *  org.bukkit.entity.Player
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.EventPriority
- *  org.bukkit.event.Listener
- *  org.bukkit.event.player.PlayerJoinEvent
- */
+
 package me.bodyash.SimpleTimedRank.Main;
 
 import me.bodyash.SimpleTimedRank.Main.ConfigUsers;
 import me.bodyash.SimpleTimedRank.Main.Main;
-import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
