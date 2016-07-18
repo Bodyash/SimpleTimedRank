@@ -4,7 +4,7 @@ package me.bodyash.SimpleTimedRank.Main;
 import me.bodyash.SimpleTimedRank.Main.ConfigUsers;
 import me.bodyash.SimpleTimedRank.Main.ConfigUtility;
 import me.bodyash.SimpleTimedRank.Main.TimeChecker;
-import me.bodyash.SimpleTimedRank.versionchecker.UpdateChecker;
+import me.bodyash.SimpleTimedRank.versionchecker.SpigotUpdater;
 import java.io.PrintStream;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -34,7 +34,7 @@ public class Main extends JavaPlugin {
 	private ConfigUsers confUsers;
 	private ConfigUtility confUtility;
 	private TimeChecker timeChecker;
-	private UpdateChecker updateChecker;
+	private SpigotUpdater spigotUpdater;
 	private ConsoleCommandSender console;
 	public boolean debug = false;
 
@@ -45,18 +45,20 @@ public class Main extends JavaPlugin {
 		this.timeChecker = new TimeChecker(this, this.confUsers);
 		this.getServer().getPluginManager().registerEvents((Listener) this.timeChecker, (Plugin) this);
 		this.noPermissions = this.getNoPermMessage();
-		/*if (this.isCheckVersion()) {
-			this.updateChecker = new UpdateChecker(this,
-					"http://dev.bukkit.org/bukkit-plugins/simplepromote/files.rss");
-			this.updateChecker.updateNeeded();
-			this.updateChecker.sendConsoleMessages(this.console);
+		
+		
+		if (this.isCheckVersion()) {
+			this.spigotUpdater = new SpigotUpdater(this);
+			this.spigotUpdater.sendConsoleMessages(this.console, this);
 		} else {
-			this.updateChecker = null;
+			this.spigotUpdater = null;
 			this.console.sendMessage(String.valueOf(this.consoleLogo) + "You disabled version checking! :(");
 			this.console.sendMessage(String.valueOf(this.consoleLogo)
 					+ "If you want to be informed about a new version of " + this.descFile.getName());
 			this.console.sendMessage(String.valueOf(this.consoleLogo) + "Enable it in the config. :)");
-		}*/
+		}
+		
+		
 		this.console.sendMessage(String.valueOf(this.logo) + (Object) ChatColor.GREEN + "Successfully enabled");
 		System.out.println("[" + this.descFile.getName() + "] Version " + this.descFile.getVersion() + " by "
 				+ this.descFile.getAuthors() + ".");

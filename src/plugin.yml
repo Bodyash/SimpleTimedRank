@@ -1,8 +1,8 @@
 name: SimpleTimedRank
-version: 1.0
+version: 1.1
 description: "With this plug-in you can promote or demote a player with a variable rank until a given date. This is very helpful for server owners who want to set a player to a special rank like VIP."
 author: Bodyash
-website: http://dev.bukkit.org/404/
+website: https://www.spigotmc.org/resources/simpletimedrank.26566
 
 main: me.bodyash.SimpleTimedRank.Main.Main
 database: false
