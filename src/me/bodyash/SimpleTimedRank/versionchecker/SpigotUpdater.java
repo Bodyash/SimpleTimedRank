@@ -99,7 +99,7 @@ public class SpigotUpdater {
 	
     public void sendConsoleMessages(ConsoleCommandSender console, Main main) {
         if (!this.updateFound) {
-            console.sendMessage(String.valueOf(main.getLogo()) + (Object)ChatColor.RED + "Your version of " + main.getDescription().getName() + " is up to date!");
+            console.sendMessage(String.valueOf(main.getLogo()) + (Object)ChatColor.GREEN + "Your version of " + main.getDescription().getName() + " is up to date!");
         } else {
             console.sendMessage(String.valueOf(main.getLogo()) + (Object)ChatColor.RED + "A new version of " + main.getDescription().getName() + " is available!");
             console.sendMessage(String.valueOf(main.getLogo()) + (Object)ChatColor.RED + "Download it from: " + main.getDescription().getWebsite() + "/updates");

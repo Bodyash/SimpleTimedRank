@@ -13,12 +13,10 @@ public class ConfigUsers {
     private String consoleLogo;
     private File configFile;
     private YamlConfiguration config;
-    private double versionNumberStorage;
     public double versionNumber;
     private String versionNumberPath;
 
     public ConfigUsers(Main main) {
-        this.versionNumber = this.versionNumberStorage = 1.1;
         this.versionNumberPath = "VersionNumber";
         this.main = main;
         this.consoleLogo = main.getConsoleLogo();
@@ -31,7 +29,7 @@ public class ConfigUsers {
         if (!this.configFile.exists()) {
             System.out.println(String.valueOf(this.consoleLogo) + "... Starting users config creation ...");
             this.createUsersConfig();
-        } else if (Double.valueOf(this.config.getString(this.versionNumberPath)) < this.versionNumber) {
+        }/* else if (Double.valueOf(this.config.getString(this.versionNumberPath)) < this.versionNumber) {
             System.err.println(String.valueOf(this.consoleLogo) + "... New users config version detected ...");
             System.err.println(String.valueOf(this.consoleLogo) + "... Backing up old users config ...");
             System.err.println(String.valueOf(this.consoleLogo) + "... Don't forget to restore your user data! ...");
@@ -62,7 +60,8 @@ public class ConfigUsers {
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
+        //totaly useless code
     }
 
     private void createUsersConfig() {

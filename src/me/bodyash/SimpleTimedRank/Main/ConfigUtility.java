@@ -51,7 +51,7 @@ public class ConfigUtility {
         if (!this.configFile.exists()) {
             System.out.println(String.valueOf(this.consoleLogo) + "... Starting config creation ...");
             this.createConfig();
-        } else if (Double.valueOf(this.config.getString(this.versionNumberPath)) < this.versionNumber) {
+        }/* else if (Double.valueOf(this.config.getString(this.versionNumberPath)) < this.versionNumber) {
             System.err.println(String.valueOf(this.consoleLogo) + "... New config version detected ...");
             System.err.println(String.valueOf(this.consoleLogo) + "... Backing up old config ...");
             try {
@@ -78,7 +78,7 @@ public class ConfigUtility {
                     e.printStackTrace();
                 }
             }
-        } else {
+        }*/ else {
             block31 : {
                 if (this.config.getString(this.noPermMessagePath).isEmpty()) {
                     System.err.println(String.valueOf(this.main.getConsoleLogo()) + "... Something went wrong while setting the \"NoPermMessage\", using default message (\u00a73You don't have permissions to do that!). ...");
