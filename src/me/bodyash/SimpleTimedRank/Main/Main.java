@@ -229,10 +229,10 @@ public class Main extends JavaPlugin {
 						Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(),
 								(String) this.parseSyntax(this.getPromoteCommand(), args[0], args[1], args[3]));
 						sender.sendMessage(String.valueOf(this.logo) + "The player " + args[0]
-								+ " has been promoted to the rank " + args[1] + " until " + args[2] + "!");
+								+ " has been promoted to the rank " + args[1] + " until " + this.timeChecker.parseNumsAndLetters(args[2], timeNow).getTime() + "!");
 						System.out.println(String.valueOf(this.consoleLogo) + "The player " + args[0]
 								+ " has been promoted from the player " + sender.getName() + " from " + args[3] + " to "
-								+ args[1] + " until " + args[2] + "!");
+								+ args[1] + " until " + this.timeChecker.parseNumsAndLetters(args[2], timeNow).getTime() + "!");
 						return true;
 					} catch (Exception e) {
 						sender.sendMessage(String.valueOf(this.logo)
@@ -244,8 +244,8 @@ public class Main extends JavaPlugin {
 						return false;
 					}
 				}
-				sender.sendMessage(String.valueOf(this.logo) + "Correct date format: day.month.year");
-				sender.sendMessage(String.valueOf(this.logo) + "Example: /temprank Player Vip 20.04.2013 Builder");
+				sender.sendMessage(String.valueOf(this.logo) + "Correct date format: 5d or 2m (5 days, 2 months)");
+				sender.sendMessage(String.valueOf(this.logo) + "Example: /temprank Player Vip 25d Builder");
 			}
 			if (args.length == 5) {
 				if (this.checkIfCorrectDate(args[2]) && this.checkIfCorrectTime(args[3])) {
@@ -257,10 +257,10 @@ public class Main extends JavaPlugin {
 						Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(),
 								(String) this.parseSyntax(this.getPromoteCommand(), args[0], args[1], args[3]));
 						sender.sendMessage(String.valueOf(this.logo) + "The player " + args[0]
-								+ " has been promoted to the rank " + args[1] + " until " + args[2] + "!");
+								+ " has been promoted to the rank " + args[1] + " until " + this.timeChecker.parseNumsAndLetters(args[2], timeNow).getTime() + "!");
 						System.out.println(String.valueOf(this.consoleLogo) + "The player " + args[0]
 								+ " has been promoted from the player " + sender.getName() + " from " + args[4] + " to "
-								+ args[1] + " until " + args[2] + "!");
+								+ args[1] + " until " + this.timeChecker.parseNumsAndLetters(args[2], timeNow).getTime() + "!");
 						return true;
 					} catch (Exception e) {
 						sender.sendMessage(String.valueOf(this.logo)
@@ -279,7 +279,7 @@ public class Main extends JavaPlugin {
 					sender.sendMessage(String.valueOf(this.logo) + "Correct time format: hours:minutes");
 				}
 				sender.sendMessage(
-						String.valueOf(this.logo) + "Example: /temprank Player Vip 20.04.2013 20:12 Builder");
+						String.valueOf(this.logo) + "Example: /temprank Player Vip 14d 20:12 Builder");
 			}
 		} else {
 			sender.sendMessage(this.noPermissions);
