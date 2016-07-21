@@ -92,7 +92,7 @@ public class TimeChecker implements Listener {
 							return;
 						}
 					}
-					if (newNow.getTime().getDay() - until.getTime().getDay() == 0) {
+					if ((newNow.getTime().getDay() - until.getTime().getDay() == 0) && (newNow.getTime().getMonth() - until.getTime().getMonth() == 0) && (newNow.getTime().getYear() - until.getTime().getYear() == 0)) {
 						System.out.println(
 								String.valueOf(until.getTimeInMillis() - newNow.getTimeInMillis()) + " Time 2");
 						p.sendMessage(String.valueOf(this.main.getLogo()) + this.main.parseSyntax(
