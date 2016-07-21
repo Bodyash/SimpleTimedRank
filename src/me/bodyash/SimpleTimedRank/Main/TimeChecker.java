@@ -72,14 +72,14 @@ public class TimeChecker implements Listener {
 						this.parseTimeToString(now.getTime()));
 				if (this.main.debug) {
 					System.out.println(
-							"Stunden: " + until.getTime().getHours() + " Minuten: " + until.getTime().getMinutes());
+							"Hours: " + until.getTime().getHours() + " Minutes: " + until.getTime().getMinutes());
 					System.out.println(
-							"Stunden: " + newNow.getTime().getHours() + " Minuten: " + newNow.getTime().getMinutes());
+							"Hours: " + newNow.getTime().getHours() + " Minutes: " + newNow.getTime().getMinutes());
 				}
 				if (until != null && newNow != null) {
 					if (newNow.getTimeInMillis() - until.getTimeInMillis() > 0) {
 						System.out.println(
-								String.valueOf(until.getTimeInMillis() - newNow.getTimeInMillis()) + " Zeit 1");
+								String.valueOf(until.getTimeInMillis() - newNow.getTimeInMillis()) + " Time 1");
 						if (this.confU.getUserData(p.getName(), "status").compareToIgnoreCase("-1") != 0) {
 							p.sendMessage(String.valueOf(this.main.getLogo()) + this.main.getTimeExpiredMsg());
 							Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(),
@@ -94,7 +94,7 @@ public class TimeChecker implements Listener {
 					}
 					if (newNow.getTime().getDay() - until.getTime().getDay() == 0) {
 						System.out.println(
-								String.valueOf(until.getTimeInMillis() - newNow.getTimeInMillis()) + " Zeit 2");
+								String.valueOf(until.getTimeInMillis() - newNow.getTimeInMillis()) + " Time 2");
 						p.sendMessage(String.valueOf(this.main.getLogo()) + this.main.parseSyntax(
 								this.main.getLastDayMsg(), p.getName(), this.confU.getUserData(p.getName(), "oldRank"),
 								this.confU.getUserData(p.getName(), "promotedRank")));
