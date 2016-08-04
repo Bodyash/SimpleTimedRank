@@ -1,4 +1,4 @@
-package me.bodyash.SimpleTimedRank.Main;
+package me.bodyash.SimpleTimedRank.utils;
 
 import me.bodyash.SimpleTimedRank.Main.Main;
 import java.io.File;

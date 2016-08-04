@@ -1,10 +1,11 @@
 
 package me.bodyash.SimpleTimedRank.Main;
 
-import me.bodyash.SimpleTimedRank.Main.ConfigUsers;
-import me.bodyash.SimpleTimedRank.Main.ConfigUtility;
-import me.bodyash.SimpleTimedRank.Main.TimeChecker;
-import me.bodyash.SimpleTimedRank.versionchecker.SpigotUpdater;
+import me.bodyash.SimpleTimedRank.utils.ConfigUsers;
+import me.bodyash.SimpleTimedRank.utils.ConfigUtility;
+import me.bodyash.SimpleTimedRank.utils.TimeChecker;
+import me.bodyash.SimpleTimedRank.utils.updater.SpigotUpdater;
+
 import java.io.PrintStream;
 import java.util.Date;
 import java.util.GregorianCalendar;

@@ -1,4 +1,4 @@
-package me.bodyash.SimpleTimedRank.versionchecker;
+package me.bodyash.SimpleTimedRank.utils.updater;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
