@@ -131,18 +131,6 @@ public class TimeChecker implements Listener {
 		}
 		return result;
 	}
-	
-	public String parseDateToString(GregorianCalendar date) {
-		String result = null;
-		try {
-			SimpleDateFormat until = new SimpleDateFormat(this.main.getDateFormat());
-			result = until.format(date);
-		} catch (Exception e) {
-			System.err.println(e);
-			return null;
-		}
-		return result;
-	}
 
 	public String parseTimeToString(Date date) {
 		String result = null;
@@ -157,21 +145,11 @@ public class TimeChecker implements Listener {
 	}
 
 	public GregorianCalendar parseDate(String stringDate, String stringTime) {
-		GregorianCalendar greg = null;
+		GregorianCalendar greg = new GregorianCalendar();
 		try {
-			StringTokenizer date = new StringTokenizer(stringDate, ".");
-			int day = Integer.parseInt(date.nextToken());
-			int month = Integer.parseInt(date.nextToken());
-			int year = Integer.parseInt(date.nextToken());
-			StringTokenizer time = new StringTokenizer(stringTime, ":");
-			int hour = Integer.parseInt(time.nextToken());
-			int minute = Integer.parseInt(time.nextToken());
-			greg = new GregorianCalendar(year + 1900, month, day, hour, minute);
-			if (this.main.debug) {
-				System.out.println(String.valueOf(greg.getTime().getDate()) + "." + greg.getTime().getMonth() + "."
-						+ greg.getTime().getYear());
-			}
-		} catch (Exception e) {
+			greg.setTime(sdf.parse(stringDate + " " + stringTime));
+		} catch (ParseException e) {
+			e.printStackTrace();
 			return null;
 		}
 		return greg;

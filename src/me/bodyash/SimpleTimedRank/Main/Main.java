@@ -230,8 +230,8 @@ public class Main extends JavaPlugin {
 						//temprank name    sponsor      30d         -       -          -       member
 						this.confUsers.addUser(args[0], args[1],
 								this.timeChecker
-										.parseDateToString(this.timeChecker.parseNumsAndLetters(args[2], timeNow, "00:00")),
-								"00:00", this.timeChecker.parseDateToString(timeNow),
+										.parseDateToString(this.timeChecker.parseNumsAndLetters(args[2], timeNow, "00:00").getTime()),
+								"00:00", this.timeChecker.parseDateToString(timeNow.getTime()),
 								this.timeChecker.parseTimeToString(timeNow.getTime()), args[3]);
 						Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(),
 								(String) this.parseSyntax(this.getPromoteCommand(), args[0], args[1], args[3]));
