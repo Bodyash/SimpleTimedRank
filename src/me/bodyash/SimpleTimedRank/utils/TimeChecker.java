@@ -4,6 +4,7 @@ package me.bodyash.SimpleTimedRank.utils;
 import me.bodyash.SimpleTimedRank.Main.Main;
 
 import java.io.PrintStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,10 +22,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class TimeChecker implements Listener {
 	private Main main;
 	private ConfigUsers confU;
+	private SimpleDateFormat sdf;
 
 	public TimeChecker(Main main, ConfigUsers confU) {
 		this.main = main;
 		this.confU = confU;
+		SimpleDateFormat sdf = new SimpleDateFormat(main.getDateFormat() + " HH:mm");
 	}
 
 	public Long getPlayerDaysLeft(String playerName) {
@@ -33,8 +36,8 @@ public class TimeChecker implements Listener {
 		block4: {
 			try {
 				now = new GregorianCalendar();
-				until = this.parseDate(this.confU.getUserData(playerName, "untilDate"),
-						this.confU.getUserData(playerName, "UntilTime"));
+				until = new GregorianCalendar();
+				until.setTime(sdf.parse(this.confU.getUserData(playerName, "untilDate") + " " + this.confU.getUserData(playerName, "UntilTime")));
 				if (now != null && until != null)
 					break block4;
 				return null;
@@ -42,8 +45,6 @@ public class TimeChecker implements Listener {
 				return null;
 			}
 		}
-		now.add(2, 1);
-		now.add(1, 1900);
 		if (this.main.debug) {
 			System.out.println("Until: Date: " + until.getTime().getDate() + " Month: " + until.getTime().getMonth()
 					+ " Year: " + until.getTime().getYear() + " Hours: " + until.getTime().getHours() + " Minutes: "
@@ -65,21 +66,28 @@ public class TimeChecker implements Listener {
 		try {
 			if (this.confU.getUserData(p.getName(), "promotedRank") != null
 					&& this.confU.getUserData(p.getName(), "status").compareToIgnoreCase("-1") != 0) {
-				GregorianCalendar until = this.parseDate(this.confU.getUserData(p.getName(), "untilDate"),
+				GregorianCalendar until = new GregorianCalendar();
+				try {
+					until = new GregorianCalendar();
+					until.setTime(sdf.parse(this.confU.getUserData(p.getName(), "untilDate") + " " + this.confU.getUserData(p.getName(), "UntilTime")));
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+						/*.parseDate(this.confU.getUserData(p.getName(), "untilDate"),
 						this.confU.getUserData(p.getName(), "untilTime"));
+						This is a old code*/
 				GregorianCalendar now = new GregorianCalendar();
-				GregorianCalendar newNow = this.parseDate(this.parseDateToString(now.getTime()),
-						this.parseTimeToString(now.getTime()));
 				if (this.main.debug) {
 					System.out.println(
 							"Hours: " + until.getTime().getHours() + " Minutes: " + until.getTime().getMinutes());
 					System.out.println(
-							"Hours: " + newNow.getTime().getHours() + " Minutes: " + newNow.getTime().getMinutes());
+							"Hours: " + now.getTime().getHours() + " Minutes: " + now.getTime().getMinutes());
 				}
-				if (until != null && newNow != null) {
-					if (newNow.getTimeInMillis() - until.getTimeInMillis() > 0) {
+				if (until != null && now != null) {
+					if (now.getTimeInMillis() - until.getTimeInMillis() > 0) {
 						System.out.println(
-								String.valueOf(until.getTimeInMillis() - newNow.getTimeInMillis()) + " Time 1");
+								String.valueOf(until.getTimeInMillis() - now.getTimeInMillis()) + " Time 1");
 						if (this.confU.getUserData(p.getName(), "status").compareToIgnoreCase("-1") != 0) {
 							p.sendMessage(String.valueOf(this.main.getLogo()) + this.main.getTimeExpiredMsg());
 							Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(),
@@ -92,9 +100,9 @@ public class TimeChecker implements Listener {
 							return;
 						}
 					}
-					if ((newNow.getTime().getDay() - until.getTime().getDay() == 0) && (newNow.getTime().getMonth() - until.getTime().getMonth() == 0) && (newNow.getTime().getYear() - until.getTime().getYear() == 0)) {
+					if ((now.get(Calendar.DAY_OF_YEAR) - until.get(Calendar.DAY_OF_YEAR) == 0) && (now.get(Calendar.YEAR) - until.get(Calendar.YEAR)) == 0) {
 						System.out.println(
-								String.valueOf(until.getTimeInMillis() - newNow.getTimeInMillis()) + " Time 2");
+								String.valueOf(until.getTimeInMillis() - now.getTimeInMillis()) + " Time 2");
 						p.sendMessage(String.valueOf(this.main.getLogo()) + this.main.parseSyntax(
 								this.main.getLastDayMsg(), p.getName(), this.confU.getUserData(p.getName(), "oldRank"),
 								this.confU.getUserData(p.getName(), "promotedRank")));
@@ -169,7 +177,7 @@ public class TimeChecker implements Listener {
 		return greg;
 	}
 
-	public GregorianCalendar parseNumsAndLetters(String stringDate, GregorianCalendar currentTime) {
+	public GregorianCalendar parseNumsAndLetters(String stringDate, GregorianCalendar currentTime, String time) {
 		GregorianCalendar greg = new GregorianCalendar();
 		greg.setTime(currentTime.getTime());
 		stringDate.toLowerCase();
@@ -187,6 +195,16 @@ public class TimeChecker implements Listener {
 		}
 		
 		greg.add(Calendar.DAY_OF_YEAR, days);
+		
+		SimpleDateFormat sdfTemp = new SimpleDateFormat("HH:mm");
+		GregorianCalendar gregTemp = new GregorianCalendar();
+		try {
+			gregTemp.setTime(sdfTemp.parse(time));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		greg.set(Calendar.HOUR_OF_DAY, gregTemp.get(Calendar.HOUR_OF_DAY));
+		greg.set(Calendar.MINUTE, gregTemp.get(Calendar.MINUTE));
 
 		return greg;
 	}

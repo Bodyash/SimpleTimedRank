@@ -7,6 +7,7 @@ import me.bodyash.SimpleTimedRank.utils.TimeChecker;
 import me.bodyash.SimpleTimedRank.utils.updater.SpigotUpdater;
 
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -38,6 +39,7 @@ public class Main extends JavaPlugin {
 	private SpigotUpdater spigotUpdater;
 	private ConsoleCommandSender console;
 	public boolean debug = false;
+	
 
 	public void onEnable() {
 		this.setUp();
@@ -46,6 +48,7 @@ public class Main extends JavaPlugin {
 		this.timeChecker = new TimeChecker(this, this.confUsers);
 		this.getServer().getPluginManager().registerEvents((Listener) this.timeChecker, (Plugin) this);
 		this.noPermissions = this.getNoPermMessage();
+		
 		
 		
 		if (this.isCheckVersion()) {
@@ -206,6 +209,7 @@ public class Main extends JavaPlugin {
 	}
 
 	private boolean tempRank(CommandSender sender, Command command, String label, String[] args) {
+		SimpleDateFormat sdf = new SimpleDateFormat(this.getDateFormat() + " HH:mm");
 		if (args.length < 4 || args.length > 5) {
 			if (sender.hasPermission("simpletimedrank.help")) {
 				sender.sendMessage(String.valueOf(this.logo) + (Object) ChatColor.GOLD
@@ -222,18 +226,20 @@ public class Main extends JavaPlugin {
 			if (args.length == 4) {
 				if (this.checkIfCorrectDate(args[2])) {
 					try {
+						//addUser(name, promotedRank, untilDate, untilTime, fromDate, fromTime, oldRank);
+						//temprank name    sponsor      30d         -       -          -       member
 						this.confUsers.addUser(args[0], args[1],
 								this.timeChecker
-										.parseDateToString(this.timeChecker.parseNumsAndLetters(args[2], timeNow).getTime()),
-								"00:00", this.timeChecker.parseDateToString(timeNow.getTime()),
+										.parseDateToString(this.timeChecker.parseNumsAndLetters(args[2], timeNow, "00:00")),
+								"00:00", this.timeChecker.parseDateToString(timeNow),
 								this.timeChecker.parseTimeToString(timeNow.getTime()), args[3]);
 						Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(),
 								(String) this.parseSyntax(this.getPromoteCommand(), args[0], args[1], args[3]));
 						sender.sendMessage(String.valueOf(this.logo) + "The player " + args[0]
-								+ " has been promoted to the rank " + args[1] + " until " + this.timeChecker.parseNumsAndLetters(args[2], timeNow).getTime() + "!");
+								+ " has been promoted to the rank " + args[1] + " until " + sdf.format(this.timeChecker.parseNumsAndLetters(args[2], timeNow, "00:00").getTime()) + "!");
 						System.out.println(String.valueOf(this.consoleLogo) + "The player " + args[0]
 								+ " has been promoted from the player " + sender.getName() + " from " + args[3] + " to "
-								+ args[1] + " until " + this.timeChecker.parseNumsAndLetters(args[2], timeNow).getTime() + "!");
+								+ args[1] + " until " + sdf.format(this.timeChecker.parseNumsAndLetters(args[2], timeNow, "00:00").getTime()) + "!");
 						return true;
 					} catch (Exception e) {
 						sender.sendMessage(String.valueOf(this.logo)
@@ -251,17 +257,18 @@ public class Main extends JavaPlugin {
 			if (args.length == 5) {
 				if (this.checkIfCorrectDate(args[2]) && this.checkIfCorrectTime(args[3])) {
 					try {
+				      //this.confUsers.addUser(name, promotedRank, untilDate, untilTime, fromDate, fromTime, oldRank);
 						this.confUsers.addUser(args[0], args[1], this.timeChecker
-								.parseDateToString(this.timeChecker.parseNumsAndLetters(args[2], timeNow).getTime()), args[3],
+								.parseDateToString(this.timeChecker.parseNumsAndLetters(args[2], timeNow, args[3]).getTime()), args[3],
 								this.timeChecker.parseDateToString(timeNow.getTime()),
 								this.timeChecker.parseTimeToString(timeNow.getTime()), args[4]);
 						Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(),
 								(String) this.parseSyntax(this.getPromoteCommand(), args[0], args[1], args[3]));
 						sender.sendMessage(String.valueOf(this.logo) + "The player " + args[0]
-								+ " has been promoted to the rank " + args[1] + " until " + this.timeChecker.parseNumsAndLetters(args[2], timeNow).getTime() + "!");
+								+ " has been promoted to the rank " + args[1] + " until " + sdf.format(this.timeChecker.parseNumsAndLetters(args[2], timeNow, args[3]).getTime()) + "!");
 						System.out.println(String.valueOf(this.consoleLogo) + "The player " + args[0]
 								+ " has been promoted from the player " + sender.getName() + " from " + args[4] + " to "
-								+ args[1] + " until " + this.timeChecker.parseNumsAndLetters(args[2], timeNow).getTime() + "!");
+								+ args[1] + " until " + sdf.format(this.timeChecker.parseNumsAndLetters(args[2], timeNow, args[3]).getTime()) + "!");
 						return true;
 					} catch (Exception e) {
 						sender.sendMessage(String.valueOf(this.logo)
