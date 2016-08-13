@@ -37,7 +37,8 @@ public class TimeChecker implements Listener {
 			try {
 				now = new GregorianCalendar();
 				until = new GregorianCalendar();
-				until.setTime(sdf.parse(this.confU.getUserData(playerName, "untilDate") + " " + this.confU.getUserData(playerName, "UntilTime")));
+				until.setTime(sdf.parse(this.confU.getUserData(playerName, "untilDate") + " "
+						+ this.confU.getUserData(playerName, "UntilTime")));
 				if (now != null && until != null)
 					break block4;
 				return null;
@@ -69,25 +70,27 @@ public class TimeChecker implements Listener {
 				GregorianCalendar until = new GregorianCalendar();
 				try {
 					until = new GregorianCalendar();
-					until.setTime(sdf.parse(this.confU.getUserData(p.getName(), "untilDate") + " " + this.confU.getUserData(p.getName(), "UntilTime")));
+					until.setTime(sdf.parse(this.confU.getUserData(p.getName(), "untilDate") + " "
+							+ this.confU.getUserData(p.getName(), "UntilTime")));
 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-						/*.parseDate(this.confU.getUserData(p.getName(), "untilDate"),
-						this.confU.getUserData(p.getName(), "untilTime"));
-						This is a old code*/
+				/*
+				 * .parseDate(this.confU.getUserData(p.getName(), "untilDate"),
+				 * this.confU.getUserData(p.getName(), "untilTime")); This is a
+				 * old code
+				 */
 				GregorianCalendar now = new GregorianCalendar();
 				if (this.main.debug) {
 					System.out.println(
 							"Hours: " + until.getTime().getHours() + " Minutes: " + until.getTime().getMinutes());
-					System.out.println(
-							"Hours: " + now.getTime().getHours() + " Minutes: " + now.getTime().getMinutes());
+					System.out
+							.println("Hours: " + now.getTime().getHours() + " Minutes: " + now.getTime().getMinutes());
 				}
 				if (until != null && now != null) {
 					if (now.getTimeInMillis() - until.getTimeInMillis() > 0) {
-						System.out.println(
-								String.valueOf(until.getTimeInMillis() - now.getTimeInMillis()) + " Time 1");
+						System.out.println(String.valueOf(until.getTimeInMillis() - now.getTimeInMillis()) + " Time 1");
 						if (this.confU.getUserData(p.getName(), "status").compareToIgnoreCase("-1") != 0) {
 							p.sendMessage(String.valueOf(this.main.getLogo()) + this.main.getTimeExpiredMsg());
 							Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(),
@@ -100,9 +103,9 @@ public class TimeChecker implements Listener {
 							return;
 						}
 					}
-					if ((now.get(Calendar.DAY_OF_YEAR) - until.get(Calendar.DAY_OF_YEAR) == 0) && (now.get(Calendar.YEAR) - until.get(Calendar.YEAR)) == 0) {
-						System.out.println(
-								String.valueOf(until.getTimeInMillis() - now.getTimeInMillis()) + " Time 2");
+					if ((now.get(Calendar.DAY_OF_YEAR) - until.get(Calendar.DAY_OF_YEAR) == 0)
+							&& (now.get(Calendar.YEAR) - until.get(Calendar.YEAR)) == 0) {
+						System.out.println(String.valueOf(until.getTimeInMillis() - now.getTimeInMillis()) + " Time 2");
 						p.sendMessage(String.valueOf(this.main.getLogo()) + this.main.parseSyntax(
 								this.main.getLastDayMsg(), p.getName(), this.confU.getUserData(p.getName(), "oldRank"),
 								this.confU.getUserData(p.getName(), "promotedRank")));
@@ -148,6 +151,10 @@ public class TimeChecker implements Listener {
 		GregorianCalendar greg = new GregorianCalendar();
 		try {
 			greg.setTime(sdf.parse(stringDate + " " + stringTime));
+			if (this.main.debug) {
+				System.out.println(String.valueOf(greg.get(Calendar.DAY_OF_MONTH)) + "." + greg.get(Calendar.MONTH) + "."
+						+ greg.get(Calendar.YEAR));
+			}
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return null;
@@ -162,18 +169,18 @@ public class TimeChecker implements Listener {
 		int days = 0;
 		if (stringDate.endsWith("m")) {
 			if (stringDate.length() >= 3) {
-				days = Integer.parseInt(stringDate.substring(0, 2))*30;
+				days = Integer.parseInt(stringDate.substring(0, 2)) * 30;
 			} else if (stringDate.length() == 2) {
-				days = Integer.parseInt(stringDate.substring(0, 1))*30;
+				days = Integer.parseInt(stringDate.substring(0, 1)) * 30;
 			}
 		}
-		
-		if (stringDate.endsWith("d")){
+
+		if (stringDate.endsWith("d")) {
 			days = Integer.parseInt(stringDate.substring(0, stringDate.length() - 1));
 		}
-		
+
 		greg.add(Calendar.DAY_OF_YEAR, days);
-		
+
 		SimpleDateFormat sdfTemp = new SimpleDateFormat("HH:mm");
 		GregorianCalendar gregTemp = new GregorianCalendar();
 		try {
