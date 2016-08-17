@@ -27,24 +27,25 @@ public class TimeChecker implements Listener {
 	public TimeChecker(Main main, ConfigUsers confU) {
 		this.main = main;
 		this.confU = confU;
-		SimpleDateFormat sdf = new SimpleDateFormat(main.getDateFormat() + " HH:mm");
+		this.sdf = new SimpleDateFormat(main.getDateFormat() + " HH:mm");
 	}
 
 	public Long getPlayerDaysLeft(String playerName) {
 		GregorianCalendar until;
 		GregorianCalendar now;
 		block4: {
+			now = new GregorianCalendar();
+			until = new GregorianCalendar();
 			try {
-				now = new GregorianCalendar();
-				until = new GregorianCalendar();
 				until.setTime(sdf.parse(this.confU.getUserData(playerName, "untilDate") + " "
 						+ this.confU.getUserData(playerName, "UntilTime")));
-				if (now != null && until != null)
-					break block4;
-				return null;
-			} catch (Exception e) {
+			} catch (Exception e){
+				e.printStackTrace();
 				return null;
 			}
+			if (now != null && until != null)
+				break block4;
+			return null;
 		}
 		if (this.main.debug) {
 			System.out.println("Until: Date: " + until.getTime().getDate() + " Month: " + until.getTime().getMonth()
@@ -152,8 +153,8 @@ public class TimeChecker implements Listener {
 		try {
 			greg.setTime(sdf.parse(stringDate + " " + stringTime));
 			if (this.main.debug) {
-				System.out.println(String.valueOf(greg.get(Calendar.DAY_OF_MONTH)) + "." + greg.get(Calendar.MONTH) + "."
-						+ greg.get(Calendar.YEAR));
+				System.out.println(String.valueOf(greg.get(Calendar.DAY_OF_MONTH)) + "." + greg.get(Calendar.MONTH)
+						+ "." + greg.get(Calendar.YEAR));
 			}
 		} catch (ParseException e) {
 			e.printStackTrace();
