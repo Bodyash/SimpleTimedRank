@@ -39,7 +39,6 @@ public class Main extends JavaPlugin {
 	private SpigotUpdater spigotUpdater;
 	private ConsoleCommandSender console;
 	public boolean debug = false;
-	
 
 	public void onEnable() {
 		this.setUp();
@@ -48,9 +47,7 @@ public class Main extends JavaPlugin {
 		this.timeChecker = new TimeChecker(this, this.confUsers);
 		this.getServer().getPluginManager().registerEvents((Listener) this.timeChecker, (Plugin) this);
 		this.noPermissions = this.getNoPermMessage();
-		
-		
-		
+
 		if (this.isCheckVersion()) {
 			this.spigotUpdater = new SpigotUpdater(this);
 			this.spigotUpdater.sendConsoleMessages(this.console, this);
@@ -61,8 +58,7 @@ public class Main extends JavaPlugin {
 					+ "If you want to be informed about a new version of " + this.descFile.getName());
 			this.console.sendMessage(String.valueOf(this.consoleLogo) + "Enable it in the config. :)");
 		}
-		
-		
+
 		this.console.sendMessage(String.valueOf(this.logo) + (Object) ChatColor.GREEN + "Successfully enabled");
 		System.out.println("[" + this.descFile.getName() + "] Version " + this.descFile.getVersion() + " by "
 				+ this.descFile.getAuthors() + ".");
@@ -226,20 +222,25 @@ public class Main extends JavaPlugin {
 			if (args.length == 4) {
 				if (this.checkIfCorrectDate(args[2])) {
 					try {
-						//addUser(name, promotedRank, untilDate, untilTime, fromDate, fromTime, oldRank);
-						//temprank name    sponsor      30d         -       -          -       member
+						// addUser(name, promotedRank, untilDate, untilTime,
+						// fromDate, fromTime, oldRank);
+						// temprank name sponsor 30d - - - member
 						this.confUsers.addUser(args[0], args[1],
-								this.timeChecker
-										.parseDateToString(this.timeChecker.parseNumsAndLetters(args[2], timeNow, "00:00").getTime()),
+								this.timeChecker.parseDateToString(
+										this.timeChecker.parseNumsAndLetters(args[2], timeNow, "00:00").getTime()),
 								"00:00", this.timeChecker.parseDateToString(timeNow.getTime()),
 								this.timeChecker.parseTimeToString(timeNow.getTime()), args[3]);
 						Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(),
 								(String) this.parseSyntax(this.getPromoteCommand(), args[0], args[1], args[3]));
 						sender.sendMessage(String.valueOf(this.logo) + "The player " + args[0]
-								+ " has been promoted to the rank " + args[1] + " until " + sdf.format(this.timeChecker.parseNumsAndLetters(args[2], timeNow, "00:00").getTime()) + "!");
+								+ " has been promoted to the rank " + args[1] + " until "
+								+ sdf.format(this.timeChecker.parseNumsAndLetters(args[2], timeNow, "00:00").getTime())
+								+ "!");
 						System.out.println(String.valueOf(this.consoleLogo) + "The player " + args[0]
 								+ " has been promoted from the player " + sender.getName() + " from " + args[3] + " to "
-								+ args[1] + " until " + sdf.format(this.timeChecker.parseNumsAndLetters(args[2], timeNow, "00:00").getTime()) + "!");
+								+ args[1] + " until "
+								+ sdf.format(this.timeChecker.parseNumsAndLetters(args[2], timeNow, "00:00").getTime())
+								+ "!");
 						return true;
 					} catch (Exception e) {
 						sender.sendMessage(String.valueOf(this.logo)
@@ -257,18 +258,24 @@ public class Main extends JavaPlugin {
 			if (args.length == 5) {
 				if (this.checkIfCorrectDate(args[2]) && this.checkIfCorrectTime(args[3])) {
 					try {
-				      //this.confUsers.addUser(name, promotedRank, untilDate, untilTime, fromDate, fromTime, oldRank);
-						this.confUsers.addUser(args[0], args[1], this.timeChecker
-								.parseDateToString(this.timeChecker.parseNumsAndLetters(args[2], timeNow, args[3]).getTime()), args[3],
-								this.timeChecker.parseDateToString(timeNow.getTime()),
+						// this.confUsers.addUser(name, promotedRank, untilDate,
+						// untilTime, fromDate, fromTime, oldRank);
+						this.confUsers.addUser(args[0], args[1],
+								this.timeChecker.parseDateToString(
+										this.timeChecker.parseNumsAndLetters(args[2], timeNow, args[3]).getTime()),
+								args[3], this.timeChecker.parseDateToString(timeNow.getTime()),
 								this.timeChecker.parseTimeToString(timeNow.getTime()), args[4]);
 						Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(),
 								(String) this.parseSyntax(this.getPromoteCommand(), args[0], args[1], args[3]));
 						sender.sendMessage(String.valueOf(this.logo) + "The player " + args[0]
-								+ " has been promoted to the rank " + args[1] + " until " + sdf.format(this.timeChecker.parseNumsAndLetters(args[2], timeNow, args[3]).getTime()) + "!");
+								+ " has been promoted to the rank " + args[1] + " until "
+								+ sdf.format(this.timeChecker.parseNumsAndLetters(args[2], timeNow, args[3]).getTime())
+								+ "!");
 						System.out.println(String.valueOf(this.consoleLogo) + "The player " + args[0]
 								+ " has been promoted from the player " + sender.getName() + " from " + args[4] + " to "
-								+ args[1] + " until " + sdf.format(this.timeChecker.parseNumsAndLetters(args[2], timeNow, args[3]).getTime()) + "!");
+								+ args[1] + " until "
+								+ sdf.format(this.timeChecker.parseNumsAndLetters(args[2], timeNow, args[3]).getTime())
+								+ "!");
 						return true;
 					} catch (Exception e) {
 						sender.sendMessage(String.valueOf(this.logo)
@@ -286,8 +293,7 @@ public class Main extends JavaPlugin {
 				if (!this.checkIfCorrectTime(args[3])) {
 					sender.sendMessage(String.valueOf(this.logo) + "Correct time format: hours:minutes");
 				}
-				sender.sendMessage(
-						String.valueOf(this.logo) + "Example: /temprank Player Vip 14d 20:12 Builder");
+				sender.sendMessage(String.valueOf(this.logo) + "Example: /temprank Player Vip 14d 20:12 Builder");
 			}
 		} else {
 			sender.sendMessage(this.noPermissions);
@@ -439,19 +445,27 @@ public class Main extends JavaPlugin {
 
 	private boolean checkIfCorrectTime(String stringTimeToCheck) {
 		StringTokenizer args;
-		block4: {
+		if (stringTimeToCheck.contains(":")) {
+			block4: {
+				try {
+					args = new StringTokenizer(stringTimeToCheck, ":");
+					int hours = Integer.parseInt(args.nextToken());
+					if (hours >= 0 && hours <= 23)
+						break block4;
+					return false;
+				} catch (Exception e) {
+					return false;
+				}
+			}
 			try {
-				args = new StringTokenizer(stringTimeToCheck, ":");
-				int hours = Integer.parseInt(args.nextToken());
-				if (hours >= 0 && hours <= 23)
-					break block4;
-				return false;
+				int minutes = Integer.parseInt(args.nextToken());
+				if (minutes < 0 || minutes > 59) {
+					return false;
+				}
 			} catch (Exception e) {
 				return false;
 			}
-		}
-		int minutes = Integer.parseInt(args.nextToken());
-		if (minutes < 0 || minutes > 59) {
+		} else {
 			return false;
 		}
 		return true;
