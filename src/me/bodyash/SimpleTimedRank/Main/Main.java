@@ -8,6 +8,7 @@ import me.bodyash.SimpleTimedRank.utils.updater.SpigotUpdater;
 
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -69,13 +70,9 @@ public class Main extends JavaPlugin {
 
 				@Override
 				public void run() {
-					Player[] arrplayer = (Player[]) Bukkit.getOnlinePlayers().toArray();
-					int n = arrplayer.length;
-					int n2 = 0;
-					while (n2 < n) {
-						Player p = arrplayer[n2];
-						Main.this.timeChecker.checkPlayer(p);
-						++n2;
+					Collection<? extends Player> arrplayer = Bukkit.getOnlinePlayers();
+					for (Player player : arrplayer) {
+						timeChecker.checkPlayer(player);
 					}
 				}
 			}, 0, interval);
